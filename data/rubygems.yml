@@ -1,0 +1,13 @@
+# Gem name: GitHub repository
+
+actioncable: rails/rails
+actionmailer: rails/rails
+actionpack: rails/rails
+actionview: rails/rails
+activejob: rails/rails
+activemodel: rails/rails
+activerecord: rails/rails
+activesupport: rails/rails
+capistrano: capistrano/capistrano
+railties: rails/rails
+serverspec: mizzy/serverspec

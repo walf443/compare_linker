@@ -9,7 +9,7 @@ class CompareLinker
       end
 
       def to_ver(tag)
-        tag.sub(/\Av/, '')
+        return $1 if tag =~ /(\d+(?:\.\d+)+)\z/
       end
     end
   end

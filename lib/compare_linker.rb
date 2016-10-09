@@ -2,19 +2,21 @@ require "octokit"
 require_relative "compare_linker/formatter/base"
 require_relative "compare_linker/formatter/text"
 require_relative "compare_linker/formatter/markdown"
+require_relative "compare_linker/gem_dictionary"
 require_relative "compare_linker/github_link_finder"
 require_relative "compare_linker/github_tag_finder"
 require_relative "compare_linker/lockfile_comparator"
 require_relative "compare_linker/lockfile_fetcher"
 
 class CompareLinker
-  attr_reader :repo_full_name, :pr_number, :compare_links
+  attr_reader :repo_full_name, :pr_number, :compare_links, :gem_dictionary
   attr_accessor :formatter, :octokit
 
   def initialize(repo_full_name, pr_number)
     @repo_full_name = repo_full_name
     @pr_number = pr_number
     @octokit ||= Octokit::Client.new(access_token: ENV["OCTOKIT_ACCESS_TOKEN"])
+    @gem_dictionary = GemDictionary.new
     @formatter = Formatter::Text.new
   end
 
@@ -30,18 +32,18 @@ class CompareLinker
       comparator.compare(old_lockfile, new_lockfile)
       @compare_links = comparator.updated_gems.map { |gem_name, gem_info|
         if gem_info[:owner].nil?
-          finder = GithubLinkFinder.new(octokit)
+          finder = GithubLinkFinder.new(octokit, gem_dictionary)
           finder.find(gem_name)
+          gem_info[:homepage_uri] = finder.homepage_uri
           if finder.repo_owner.nil?
-            gem_info[:homepage_uri] = finder.homepage_uri
             formatter.format(gem_info)
           else
             gem_info[:repo_owner] = finder.repo_owner
             gem_info[:repo_name] = finder.repo_name
 
-            tag_finder = GithubTagFinder.new(octokit)
-            old_tag = tag_finder.find(finder.repo_full_name, gem_info[:old_ver])
-            new_tag = tag_finder.find(finder.repo_full_name, gem_info[:new_ver])
+            tag_finder = GithubTagFinder.new(octokit, gem_name, finder.repo_full_name)
+            old_tag = tag_finder.find(gem_info[:old_ver])
+            new_tag = tag_finder.find(gem_info[:new_ver])
 
             if old_tag && new_tag
               gem_info[:old_tag] = old_tag.name

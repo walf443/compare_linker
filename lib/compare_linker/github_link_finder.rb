@@ -4,10 +4,11 @@ require "net/http"
 
 class CompareLinker
   class GithubLinkFinder
-    attr_reader :octokit, :repo_owner, :repo_name, :homepage_uri
+    attr_reader :octokit, :gem_dictionary, :repo_owner, :repo_name, :homepage_uri
 
-    def initialize(octokit)
+    def initialize(octokit, gem_dictionary)
       @octokit = octokit
+      @gem_dictionary = gem_dictionary
     end
 
     def find(gem_name)
@@ -23,6 +24,7 @@ class CompareLinker
       if github_url = redirect_url(github_url)
         _, @repo_owner, @repo_name = github_url.match(%r!github\.com/([^/]+)/([^/]+)!).to_a
       else
+        @repo_owner, @repo_name  = gem_dictionary.lookup(gem_info["name"])
         @homepage_uri = gem_info["homepage_uri"]
       end
 
