@@ -9,8 +9,9 @@ class CompareLinker
         text = "* [ ] "
         text += case
         when g.owner && g.old_rev && g.new_rev
-          "%s: [%s...%s](%s)" % [
+          "[%s](%s): [%s...%s](%s)" % [
             g.gem_name,
+            github_url(g.owner, g.gem_name),
             g.old_rev,
             g.new_rev,
             github_compare_url(g.owner, g.gem_name, g.old_rev, g.new_rev),
@@ -18,7 +19,7 @@ class CompareLinker
         when g.homepage_uri && g.old_tag && g.new_tag
           "[%s](%s): [%s...%s](%s)" % [
             g.gem_name,
-            g.homepage_uri,
+            github_url(g.repo_owner, g.repo_name),
             g.old_ver,
             g.new_ver,
             github_compare_url(g.repo_owner, g.repo_name, g.old_tag, g.new_tag),
@@ -31,8 +32,9 @@ class CompareLinker
             g.new_ver,
           ]
         when g.old_tag && g.new_tag
-          "%s: [%s...%s](%s)" % [
+          "[%s](%s): [%s...%s](%s)" % [
             g.gem_name,
+            github_url(g.repo_owner, g.repo_name),
             g.old_ver,
             g.new_ver,
             github_compare_url(g.repo_owner, g.repo_name, g.old_tag, g.new_tag),
