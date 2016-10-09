@@ -41,9 +41,9 @@ class CompareLinker
             gem_info[:repo_owner] = finder.repo_owner
             gem_info[:repo_name] = finder.repo_name
 
-            tag_finder = GithubTagFinder.new(octokit)
-            old_tag = tag_finder.find(finder.repo_full_name, gem_info[:old_ver])
-            new_tag = tag_finder.find(finder.repo_full_name, gem_info[:new_ver])
+            tag_finder = GithubTagFinder.new(octokit, gem_name, finder.repo_full_name)
+            old_tag = tag_finder.find(gem_info[:old_ver])
+            new_tag = tag_finder.find(gem_info[:new_ver])
 
             if old_tag && new_tag
               gem_info[:old_tag] = old_tag.name
