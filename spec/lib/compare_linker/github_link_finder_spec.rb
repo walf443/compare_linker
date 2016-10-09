@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe CompareLinker::GithubLinkFinder do
   let(:octokit) { double.as_null_object }
+  let(:gem_dictionary) { double.as_null_object }
 
-  subject { described_class.new(octokit) }
+  subject { described_class.new(octokit, gem_dictionary) }
 
 
   describe "#find" do
