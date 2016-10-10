@@ -3,8 +3,11 @@ require "ostruct"
 class CompareLinker
   class Formatter
     class Markdown < Base
+      attr_reader :downgraded
+
       def format(gem_info)
         g = OpenStruct.new(gem_info)
+        @downgraded = downgrade?(g.old_ver, g.new_ver, g.old_tag, g.new_tag, g.old_rev, g.new_rev)
 
         text = "* [ ] "
         text += case
@@ -54,7 +57,7 @@ class CompareLinker
           ]
         end
 
-        if downgrade?(g.old_ver, g.new_ver, g.old_tag, g.new_tag, g.old_rev, g.new_rev)
+        if downgraded
           text += " (downgrade)"
         end
 
@@ -68,7 +71,8 @@ class CompareLinker
       end
 
       def github_compare_url(repo_owner, repo_name, old_tag, new_tag)
-        "#{github_url(repo_owner, repo_name)}/compare/#{old_tag}...#{new_tag}"
+        range = downgraded ? "#{new_tag}...#{old_tag}" : "#{old_tag}...#{new_tag}"
+        "#{github_url(repo_owner, repo_name)}/compare/#{range}"
       end
     end
   end
