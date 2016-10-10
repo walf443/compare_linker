@@ -54,7 +54,7 @@ class CompareLinker
           ]
         end
 
-        if downgrade?(g.old_ver, g.new_ver, g.old_tag, g.new_tag)
+        if downgrade?(g.old_ver, g.new_ver, g.old_tag, g.new_tag, g.old_rev, g.new_rev)
           text += " (downgrade)"
         end
 
