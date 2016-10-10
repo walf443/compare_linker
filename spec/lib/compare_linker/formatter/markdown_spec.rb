@@ -41,12 +41,12 @@ describe CompareLinker::Formatter::Markdown do
       context 'given owner && old_rev && new_rev' do
         # This spec may be unnecessary.
         let(:gem_info) { build(:g_downgrade__owner__old_rev__new_rev) }
-        it { is_expected.to eq '* [ ] [compare_linker](https://github.com/masutaka/compare_linker): [`1.1.2...1.1.1`](https://github.com/masutaka/compare_linker/compare/1.1.2...1.1.1)' }
+        it { is_expected.to eq '* [ ] [compare_linker](https://github.com/masutaka/compare_linker): [`1.1.2...1.1.1`](https://github.com/masutaka/compare_linker/compare/1.1.1...1.1.2) (downgrade)' }
       end
 
       context 'given homepage_uri && old_tag && new_tag' do
         let(:gem_info) { build(:g_downgrade__homepage_uri__old_tag__new_tag) }
-        it { is_expected.to eq '* [ ] [serverspec](https://github.com/mizzy/serverspec): [`2.24.1...2.24.0`](https://github.com/mizzy/serverspec/compare/v2.24.1...v2.24.0) (downgrade)' }
+        it { is_expected.to eq '* [ ] [serverspec](https://github.com/mizzy/serverspec): [`2.24.1...2.24.0`](https://github.com/mizzy/serverspec/compare/v2.24.0...v2.24.1) (downgrade)' }
       end
 
       context 'given homepage_uri' do
@@ -56,7 +56,7 @@ describe CompareLinker::Formatter::Markdown do
 
       context 'given old_tag && new_tag' do
         let(:gem_info) { build(:g_downgrade__old_tag__new_tag) }
-        it { is_expected.to eq '* [ ] [chef](https://github.com/chef/chef): [`12.4.3...12.4.1`](https://github.com/chef/chef/compare/12.4.3...12.4.1) (downgrade)' }
+        it { is_expected.to eq '* [ ] [chef](https://github.com/chef/chef): [`12.4.3...12.4.1`](https://github.com/chef/chef/compare/12.4.1...12.4.3) (downgrade)' }
       end
 
       context 'given repo_owner && repo_name' do
