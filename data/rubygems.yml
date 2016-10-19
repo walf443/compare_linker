@@ -10,4 +10,5 @@ activerecord: rails/rails
 activesupport: rails/rails
 capistrano: capistrano/capistrano
 railties: rails/rails
+redis-rack: redis-store/redis-rack
 serverspec: mizzy/serverspec
