@@ -12,3 +12,4 @@ capistrano: capistrano/capistrano
 railties: rails/rails
 redis-rack: redis-store/redis-rack
 serverspec: mizzy/serverspec
+unicorn: defunkt/unicorn
