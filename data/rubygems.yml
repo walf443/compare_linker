@@ -9,6 +9,7 @@ activemodel: rails/rails
 activerecord: rails/rails
 activesupport: rails/rails
 capistrano: capistrano/capistrano
+coffee-script-source: jashkenas/coffeescript
 railties: rails/rails
 redis-rack: redis-store/redis-rack
 serverspec: mizzy/serverspec
