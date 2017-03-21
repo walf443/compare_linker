@@ -13,5 +13,6 @@ coffee-script-source: jashkenas/coffeescript
 mixlib-archive: chef/mixlib-archive
 railties: rails/rails
 redis-rack: redis-store/redis-rack
+restforce: ejholmes/restforce
 serverspec: mizzy/serverspec
 unicorn: defunkt/unicorn
