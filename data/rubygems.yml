@@ -11,6 +11,7 @@ activesupport: rails/rails
 capistrano: capistrano/capistrano
 coffee-script-source: jashkenas/coffeescript
 mixlib-archive: chef/mixlib-archive
+mixlib-shellout: chef/mixlib-shellout
 railties: rails/rails
 redis-rack: redis-store/redis-rack
 restforce: ejholmes/restforce
