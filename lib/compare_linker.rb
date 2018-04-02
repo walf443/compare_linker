@@ -17,9 +17,9 @@ class CompareLinker
     @pr_number = pr_number
     @octokit ||= Octokit::Client.new(access_token: ENV["OCTOKIT_ACCESS_TOKEN"])
     @enterprise_octokit =
-      if ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"] && ENV['ENTERPRISE_OCTOKIT_HOST']
+      if ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"] && ENV['ENTERPRISE_OCTOKIT_API_ENDPOINT']
         Octokit::Client.new(access_token: ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"],
-                            api_endpoint: "https://#{ENV['ENTERPRISE_OCTOKIT_HOST']}/api/v3")
+                            api_endpoint: ENV["ENTERPRISE_OCTOKIT_API_ENDPOINT"])
       else
         nil
       end

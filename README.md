@@ -50,7 +50,7 @@ In addition to OCTOKIT_ACCESS_TOKEN, set the following environment variables.
 
 ```ruby
 ENV['ENTERPRISE_OCTOKIT_ACCESS_TOKEN'] = 'xxx'
-ENV['ENTERPRISE_OCTOKIT_HOST'] = 'www.example.com'
+ENV['ENTERPRISE_OCTOKIT_API_ENDPOINT'] = 'https://www.example.com/api/v3'
 ```
 
 ## Development
