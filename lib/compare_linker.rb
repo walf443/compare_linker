@@ -9,21 +9,12 @@ require_relative "compare_linker/lockfile_comparator"
 require_relative "compare_linker/lockfile_fetcher"
 
 class CompareLinker
-  attr_reader :repo_full_name, :pr_number, :compare_links, :gem_dictionary
-  attr_accessor :formatter, :octokit, :enterprise_octokit
+  attr_reader :repo_full_name, :pr_number, :compare_links
+  attr_accessor :formatter
 
   def initialize(repo_full_name, pr_number)
     @repo_full_name = repo_full_name
     @pr_number = pr_number
-    @octokit ||= Octokit::Client.new(access_token: ENV["OCTOKIT_ACCESS_TOKEN"])
-    @enterprise_octokit =
-      if ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"] && ENV['ENTERPRISE_OCTOKIT_API_ENDPOINT']
-        Octokit::Client.new(access_token: ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"],
-                            api_endpoint: ENV["ENTERPRISE_OCTOKIT_API_ENDPOINT"])
-      else
-        nil
-      end
-    @gem_dictionary = GemDictionary.new
     @formatter = Formatter::Text.new
   end
 
@@ -81,5 +72,21 @@ class CompareLinker
 
   def requested_repository_octokit
     enterprise_octokit || octokit
+  end
+
+  def enterprise_octokit
+    @enterprise_octokit ||=
+      if ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"] && ENV['ENTERPRISE_OCTOKIT_API_ENDPOINT']
+        Octokit::Client.new(access_token: ENV["ENTERPRISE_OCTOKIT_ACCESS_TOKEN"],
+                            api_endpoint: ENV["ENTERPRISE_OCTOKIT_API_ENDPOINT"])
+      end
+  end
+
+  def octokit
+    @octokit ||= Octokit::Client.new(access_token: ENV["OCTOKIT_ACCESS_TOKEN"])
+  end
+
+  def gem_dictionary
+    @gem_dictionary ||= GemDictionary.new
   end
 end
