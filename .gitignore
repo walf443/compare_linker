@@ -1,5 +1,4 @@
 /.bundle
-/.envrc
 /Gemfile.lock
 /pkg
 /vendor/bundle
