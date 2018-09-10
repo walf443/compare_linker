@@ -2,6 +2,8 @@ require "ostruct"
 
 class CompareLinker
   class Formatter
+    class InvalidGemVersionError < StandardError; end
+
     class Base
       attr_reader :g, :downgraded
 
@@ -9,6 +11,8 @@ class CompareLinker
         @g = OpenStruct.new(gem_info)
         @downgraded = downgrade?(g.old_ver, g.new_ver, g.old_tag, g.new_tag, g.old_rev, g.new_rev)
         post_format
+      rescue ArgumentError
+        raise InvalidGemVersionError, "invalid gem version: #{gem_info}"
       end
 
       private
